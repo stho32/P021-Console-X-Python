@@ -1,9 +1,14 @@
 # "mailrules" an imap based email rule engine with your own spam filter
 
-There are the following additional common rules that apply:
-https://github.com/stho32/Collection-Of-Challenges/blob/master/Common-Requirements.md
+## Dependencies
+```
+pip install imap-tools
+```
 
 ## Requirements
+
+( There are the following additional common rules that apply: https://github.com/stho32/Collection-Of-Challenges/blob/master/Common-Requirements.md )
+
 
 - [ ] (R001) The app connects to your e-mail account using imap. (Use an interface for the connection method, so you can change or extend the ways the connection works later.)
 

@@ -1,39 +1,28 @@
-import imaplib
-import time
+from email.header import decode_header
+import os
+import json
+from imap_tools import MailBox, AND
 
-server = input("server: ")
-username = input("username: ")
-password = input("password: ")
+config_file = "./Source/config.json"
 
-################ IMAP SSL ##############################
-start = time.time()
-try:
-    imap_ssl = imaplib.IMAP4_SSL(host=server, port=imaplib.IMAP4_SSL_PORT)
-except Exception as e:
-    print("ErrorType : {}, Error : {}".format(type(e).__name__, e))
-    imap_ssl = None
+if os.path.isfile("./Source/config.json"):
+    with open('./Source/config.json') as f:
+        data = json.load(f)
+        server = data["server"]
+        username = data["username"]
+        password = data["password"]
+else :
+    server = input("server: ")
+    username = input("username: ")
+    password = input("password: ")
 
-print("Connection Object : {}".format(imap_ssl))
-print("Total Time Taken  : {:,.2f} Seconds\n".format(time.time() - start))
+# get list of email subjects from INBOX folder
+with MailBox(server).login(username, password) as mailbox:
+    subjects = [msg.subject for msg in mailbox.fetch()]
 
-############### Login to Mailbox ######################
-print("Logging into mailbox...")
-try:
-    resp_code, response = imap_ssl.login(username, password)
-except Exception as e:
-    print("ErrorType : {}, Error : {}".format(type(e).__name__, e))
-    resp_code, response = None, None
-
-print("Response Code : {}".format(resp_code))
-print("Response      : {}\n".format(response[0].decode()))
-
-############### Logout of Mailbox ######################
-print("\nLogging Out....")
-try:
-    resp_code, response = imap_ssl.logout()
-except Exception as e:
-    print("ErrorType : {}, Error : {}".format(type(e).__name__, e))
-    resp_code, response = None, None
-
-print("Response Code : {}".format(resp_code))
-print("Response      : {}".format(response[0].decode()))
+# get list of email subjects from INBOX folder - equivalent verbose version
+mailbox = MailBox(server)
+mailbox.login(username, password, initial_folder='INBOX')  # or mailbox.folder.set instead 3d arg
+subjects = [msg.subject for msg in mailbox.fetch(AND(all=True))]
+print(subjects)
+mailbox.logout()
