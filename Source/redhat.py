@@ -11,7 +11,7 @@ if os.path.isfile("./Source/config.json"):
         server = data["server"]
         username = data["username"]
         password = getpass.getpass("password: ")
-else :
+else:
     server = input("server: ")
     username = input("username: ")
     password = getpass.getpass("password: ")
@@ -29,4 +29,3 @@ for message in messages:
         mailbox.move([message.uid], "INBOX/MySpam")
 
 mailbox.logout()
-
