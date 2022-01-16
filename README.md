@@ -10,7 +10,7 @@ pip install imap-tools
 ( There are the following additional common rules that apply: https://github.com/stho32/Collection-Of-Challenges/blob/master/Common-Requirements.md )
 
 
-- [ ] (R001) The app connects to your e-mail account using imap. (Use an interface for the connection method, so you can change or extend the ways the connection works later.)
+- [X] (R001) The app connects to your e-mail account using imap. (Use an interface for the connection method, so you can change or extend the ways the connection works later.)
 
 - [ ] (R002) The following base rules exist and can return "match" or "does not match" as results
   - [ ] (R007) check if the sender has a valid e-mail address (checking it lexically is enough)

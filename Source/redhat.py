@@ -24,6 +24,7 @@ messages = mailbox.fetch(AND(all=True))
 
 for message in messages:
     print(f"- {message.from_} : {message.subject}")
+
     if not message.from_:
         print("   -> this is spam, moving it")
         mailbox.move([message.uid], "INBOX/MySpam")
