@@ -11,11 +11,11 @@ if os.path.isfile("./Source/config.json"):
         data = json.load(f)
         server = data["server"]
         username = data["username"]
-        password = data["password"]
+        password = getpass.getpass("password: ")
 else :
     server = input("server: ")
     username = input("username: ")
-    password = getpass.getpass("password:")
+    password = getpass.getpass("password: ")
 
 # get list of email subjects from INBOX folder
 with MailBox(server).login(username, password) as mailbox:
