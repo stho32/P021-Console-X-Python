@@ -2,6 +2,7 @@ from email.header import decode_header
 import os
 import json
 from imap_tools import MailBox, AND
+import getpass
 
 config_file = "./Source/config.json"
 
@@ -14,7 +15,7 @@ if os.path.isfile("./Source/config.json"):
 else :
     server = input("server: ")
     username = input("username: ")
-    password = input("password: ")
+    password = getpass.getpass("password:")
 
 # get list of email subjects from INBOX folder
 with MailBox(server).login(username, password) as mailbox:
