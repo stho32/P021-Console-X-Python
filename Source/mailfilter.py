@@ -24,23 +24,20 @@ password = splitted_configuration[2]
 
 print(f"  - Accessing {server} / {username}...")
 
-# server = data["server"]
-# username = data["username"]
-# password = getpass.getpass("password: ")
-
-
 # get list of email subjects from INBOX folder - equivalent verbose version
-# mailbox = MailBox(server)
-# mailbox.login(username, password, initial_folder='INBOX')  # or mailbox.folder.set instead 3d arg
+mailbox = MailBox(server)
+mailbox.login(username, password, initial_folder='INBOX')  # or mailbox.folder.set instead 3d arg
 
-# messages = mailbox.fetch(AND(all=True))
+messages = mailbox.fetch(AND(all=True))
 
-# for message in messages:
-#     print(f"- {message.from_} : {message.subject}")
+for message in messages:
+    print(f"  - {message.from_} : {message.subject}")
+    isSpam = input("Is this spam (y/n/empty=abort):")
+    if isSpam == "":
+        break
+    if isSpam == "y":
+        print("  - marked as spam")
+        mailbox.move([message.uid], "INBOX/MySpam")
 
-#     if not message.from_:
-#         print("   -> this is spam, moving it")
-#         mailbox.move([message.uid], "INBOX/MySpam")
-
-# mailbox.logout()
+mailbox.logout()
 
