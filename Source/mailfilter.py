@@ -2,14 +2,27 @@ import os
 import json
 from imap_tools import MailBox, AND
 import keyring
-import argh
+import getpass
 
 application_id = "mailfilter"
 
 access_data = keyring.get_password(application_id, "configuration")
 
+if access_data == None:
+    server = input("Server: ")
+    username = input("Username: ")
+    password = getpass.getpass("Password: ")
+    combined = server + "|" + username + "|" + password
+    keyring.set_password(application_id, "configuration", combined)
+    print("Configuration data saved in keyring. Restart to run.")
+    exit()
 
-print(access_data)
+splitted_configuration = access_data.split("|")
+server = splitted_configuration[0]
+username = splitted_configuration[1]
+password = splitted_configuration[2]
+
+print(f"  - Accessing {server} / {username}...")
 
 # server = data["server"]
 # username = data["username"]
@@ -30,3 +43,4 @@ print(access_data)
 #         mailbox.move([message.uid], "INBOX/MySpam")
 
 # mailbox.logout()
+

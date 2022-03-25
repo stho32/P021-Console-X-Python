@@ -1,3 +1,2 @@
 #!/bin/bash
-
-python3 Source/redhat.py
+python3 Source/mailfilter.py

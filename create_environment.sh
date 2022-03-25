@@ -1,2 +1,2 @@
 #!/bin/bash
-python3 -m venv tutorial-env
+python3 -m venv venv
