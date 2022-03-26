@@ -1,12 +1,33 @@
 {
     "rules": [
         {
-            "whenMatching" : [".+?@.+?\\.xyz", ".+?@.+?\\.global"],
+            "match_against" : "text",
+            "whenMatching" : [""],
             "moveTo" : "INBOX/MySpam"
         },
         {
-            "whenMatching" : [".+?@.+?\\.legit"],
+            "match_against" : "from",
+            "whenMatching" : [
+                ".+?@.+?\\.xyz", 
+                ".+?@.+?\\.global", 
+                "",
+                ".+?@.+?\\.be"
+            ],
+            "moveTo" : "INBOX/MySpam"
+        },
+        {
+            "match_against" : "from",
+            "whenMatching" : [
+                "that_dude@doctolib.de",
+            ],
             "moveTo" : "INBOX/_HamMail"
+        },
+        {
+            "match_against" : "from",
+            "whenMatching" : [
+                "paypal@mail.paypal.de"
+            ],
+            "moveTo" : "INBOX/CommercialSpam"
         }
     ]
 }

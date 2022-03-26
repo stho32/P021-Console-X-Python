@@ -4,7 +4,8 @@ from imap_tools import MailBox, AND
 import keyring
 import getpass
 import re
-import my_rules;
+import my_rules
+import pydoc
 
 application_id = "mailfilter"
 
@@ -37,7 +38,16 @@ for message in messages:
     
     targetFolder = my_rules.get_target_folder_for(message)
     if targetFolder == None:
-        print("I could not find a target folder for this message. Stopping.")
+        text  = "\n"
+        text += "I could not find a target folder for this message.:\n"
+        text += "\n"
+        text += "==================================================================================================\n"
+        text += f"From    : {message.from_}\n"
+        text += f"Subject : {message.subject}\n"
+        text += f"Body    :\n"
+        text += "==================================================================================================\n"
+        text += message.text
+        pydoc.pager(text)
         break
     print(f"    -=> moving to {targetFolder}...")
     mailbox.move([message.uid], targetFolder)

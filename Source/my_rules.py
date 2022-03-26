@@ -9,14 +9,19 @@ with open(config_file_location) as f:
 
 def is_rule_matched(rule, message):
     for regular_expression in rule["whenMatching"]:
-        if re.fullmatch(regular_expression, message.from_) != None:
-            return True
+        if rule["match_against"] == "from":
+            if re.fullmatch(regular_expression, message.from_) != None:
+                return True
+        if rule["match_against"] == "text":
+            text = message.text.strip()
+            if re.fullmatch(regular_expression, text) != None:
+                return True
 
     return False
 
 def get_target_folder_for(message):
     for rule in config_file["rules"]:
         if is_rule_matched(rule, message):
-            return rule.moveTo
+            return rule["moveTo"]
 
     return None
