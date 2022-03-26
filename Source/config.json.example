@@ -1,0 +1,12 @@
+{
+    "rules": [
+        {
+            "whenMatching" : [".+?@.+?\\.xyz", ".+?@.+?\\.global"],
+            "moveTo" : "INBOX/MySpam"
+        },
+        {
+            "whenMatching" : [".+?@.+?\\.legit"],
+            "moveTo" : "INBOX/_HamMail"
+        }
+    ]
+}

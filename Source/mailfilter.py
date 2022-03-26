@@ -3,6 +3,8 @@ import json
 from imap_tools import MailBox, AND
 import keyring
 import getpass
+import re
+import my_rules;
 
 application_id = "mailfilter"
 
@@ -32,12 +34,13 @@ messages = mailbox.fetch(AND(all=True))
 
 for message in messages:
     print(f"  - {message.from_} : {message.subject}")
-    isSpam = input("Is this spam (y/n/empty=abort):")
-    if isSpam == "":
+    
+    targetFolder = my_rules.get_target_folder_for(message)
+    if targetFolder == None:
+        print("I could not find a target folder for this message. Stopping.")
         break
-    if isSpam == "y":
-        print("  - marked as spam")
-        mailbox.move([message.uid], "INBOX/MySpam")
+    print(f"    -=> moving to {targetFolder}...")
+    mailbox.move([message.uid], targetFolder)
 
 mailbox.logout()
 

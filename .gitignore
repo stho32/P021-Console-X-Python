@@ -1,3 +1,4 @@
 .idea/
 venv/
 Source/config.json
+Source/__pycache__
