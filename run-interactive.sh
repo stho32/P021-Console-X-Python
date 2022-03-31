@@ -1,3 +1,6 @@
 #!/bin/bash
 source ./venv/bin/activate
-python3 Source/mailfilter.py --interactive
+while true
+do
+	python3 Source/mailfilter.py --interactive
+done
